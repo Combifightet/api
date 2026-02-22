@@ -1,14 +1,18 @@
 """Module responsible for the FastAPI application and its routes."""
 
-from fastapi import FastAPI
 from contextlib import asynccontextmanager
+from fastapi import FastAPI
 from loguru import logger
+
+from src.db.connection import init_db
 
 
 
 @asynccontextmanager
-async def lifespan(app: FastAPI):
+async def lifespan(_app: FastAPI):
+    """ Lifspan manager function"""
     logger.info("Starting server . . .")
+    await init_db()
 
     yield
     logger.info("Shutting server down . . .")
