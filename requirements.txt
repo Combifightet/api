@@ -5,5 +5,3 @@ sqlmodel
 pydantic-settings
 SQLAlchemy
 asyncpg
-
-psycopg2-binary
