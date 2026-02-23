@@ -1,3 +1,6 @@
+""" Config vor global environment variables."""
+
+from pathlib import Path
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
@@ -7,7 +10,7 @@ class Settings(BaseSettings):
     PORT: int = 8000
 
     model_config = SettingsConfigDict(
-        env_file = '.env',
+        env_file='.env' if Path('.env').exists() else None,
         extra='ignore'
     )
 
