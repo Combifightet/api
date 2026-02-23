@@ -27,7 +27,7 @@ async def init_db():
         print(result)
         print(result.all())
 
-async def get_poem_by_id(int id):
+async def get_poem_by_id(id: int):
     async with AsyncSession(bind=async_engine) as session:
         statement = text("SELECT * FROM poems WHERE poems.id = :id")
 
