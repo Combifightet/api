@@ -8,5 +8,5 @@ services:
     environment:
       - DATABASE_URL=postgresql://user:password@localhost/dbname
     volumes:
-      - /volume1/docker/fastapi:/var/lib/fastapi:rw
+      - /volume1/docker/cbf_fastapi:/var/lib/cbf_fastapi:rw
     restart: on-failure:5
