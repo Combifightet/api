@@ -1,0 +1,12 @@
+version: '3.8'
+services:
+  web:
+    container_name: FastAPI
+    build: .
+    ports:
+      - 2003:8000
+    environment:
+      - DATABASE_URL=postgresql://user:password@localhost/dbname
+    volumes:
+      - /volume1/docker/fastapi:/var/lib/fastapi:rw
+    restart: on-failure:5

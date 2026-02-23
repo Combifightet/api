@@ -4,7 +4,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from loguru import logger
 
-from src.db.connection import init_db
+from src.db.connection import get_poem_by_id, init_db
 
 
 
@@ -30,6 +30,7 @@ app = FastAPI(
 def hello_world():
     return {"message": "Hello, World!"}
 
-@app.get('/ping')
-def get_ping():
-    return 'pong'
+
+@app.get('/poems/{id}')
+def get_poem(id: int):
+    return get_poem_by_id(int(id))
