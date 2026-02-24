@@ -2,6 +2,7 @@
 
 
 
+from loguru import logger
 from sqlalchemy.ext.asyncio import create_async_engine
 from sqlalchemy.ext.asyncio.engine import AsyncEngine
 from sqlmodel import text
@@ -33,6 +34,8 @@ async def get_poem_by_id(id: int):
 
         poems = result.all()
         if len(poems) == 0:
+            logger.warning(None)
             return None
         else:
+            logger.info(str(poems[0]))
             return poems[0]

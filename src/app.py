@@ -32,5 +32,5 @@ def hello_world():
 
 
 @app.get('/poems/{id}')
-def get_poem(id: int):
-    return get_poem_by_id(int(id))
+async def get_poem(id: int):
+    return await get_poem_by_id(int(id))
