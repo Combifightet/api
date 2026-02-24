@@ -1,5 +1,8 @@
 """ Config vor global environment variables."""
 
+from pydantic_settings.main import SettingsConfigDict
+
+
 from pathlib import Path
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
