@@ -9,8 +9,7 @@ from pydantic_settings.main import SettingsConfigDict
 
 class Settings(BaseSettings):
     """ Utility class that holds all global settings variables"""
-    # pylint: disable=C0301 (line-too-long)
-    DATABASE_URL: str = 'postgresql+asyncpg://public_api:public_api_password@192.168.2.202@2665/cbf_db'
+    DATABASE_URL: str = 'postgresql+asyncpg://postgres:password@127.0.0.1@5432/db_name'
     HOST: str = 'localhost'
     PORT: int = 8000
 
