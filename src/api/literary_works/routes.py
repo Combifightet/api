@@ -5,7 +5,7 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
 
-from src.db.connection import get_session
+from src.db.connection import get_poem_by_id, get_session
 
 
 
