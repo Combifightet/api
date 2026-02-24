@@ -6,7 +6,8 @@ services:
     ports:
       - 2003:8000
     environment:
-      - DATABASE_URL=postgresql+asyncpg://user:password@localhost/dbname
+      - DATABASE_URL=${DATABASE_URL}
+      - HOST=${HOST}
     volumes:
       - /volume1/docker/cbf_fastapi:/var/lib/cbf_fastapi:rw
     restart: on-failure:5
