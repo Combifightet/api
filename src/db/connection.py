@@ -2,14 +2,15 @@
 
 
 from typing import Any
+import asyncpg
 from loguru import logger
+from sqlalchemy.exc import ProgrammingError, SQLAlchemyError
 from sqlalchemy.ext.asyncio import create_async_engine
 from sqlalchemy.ext.asyncio.engine import AsyncEngine
-from sqlmodel import text
+from sqlmodel import SQLModel, text
 from sqlmodel.ext.asyncio.session import AsyncSession
 
 from src.config import settings
-
 
 
 async_engine: AsyncEngine = create_async_engine(
@@ -20,13 +21,14 @@ async_engine: AsyncEngine = create_async_engine(
 
 
 async def init_db():
-    async with AsyncSession(bind=async_engine) as session:
-        statement = text("SELECT * FROM literary_works WHERE literary_works.id = :id")
+    ''' Initializes the database and tries to crate all tables defined in `src.db.models`'''
+    try:
+        async with async_engine.begin() as conn:
+            from src.db.models import LiteraryWork
+            await conn.run_sync(SQLModel.metadata.create_all)
+    except (asyncpg.exceptions.InsufficientPrivilegeError, ProgrammingError, SQLAlchemyError) as e:
+        logger.warning(e)
 
-        result = await session.exec(statement, params={'id': 4})
-
-        print(result)
-        print(result.all())
 
 
 async def get_poem_by_id(id: int):
@@ -51,6 +53,6 @@ async def get_poem_by_id(id: int):
                     result = {
                         'value': str(work)
                     }
-            
+
             logger.info(f'Returning poem no. {id} -> "{result.get('title', '')}"')
             return result
