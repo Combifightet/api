@@ -2,6 +2,9 @@
 
 
 
+from typing import Any
+
+
 from loguru import logger
 from sqlalchemy.ext.asyncio import create_async_engine
 from sqlalchemy.ext.asyncio.engine import AsyncEngine
@@ -30,12 +33,24 @@ async def get_poem_by_id(id: int):
     async with AsyncSession(bind=async_engine) as session:
         statement = text("SELECT * FROM poems WHERE poems.id = :id")
 
-        result = await session.exec(statement, params={'id': 4})
+        result = await session.exec(statement, params={'id': id})
 
         poems = result.all()
         if len(poems) == 0:
-            logger.warning(None)
+            logger.warning(f'Couldn\'t find any poem with the id: {id} ')
             return None
         else:
-            logger.info(str(poems[0]))
-            return str(poems[0])
+            poem = poems[0]
+            result: dict[str, Any]
+            try:
+                result = dict(poem._mapping)
+            except Exception:
+                try:
+                    result = dict(poem)
+                except Exception:
+                    result = {
+                        'value': str(poem)
+                    }
+            
+            logger.info(f'Returning poem no. {id} -> "{result.get('title', '')}"')
+            return result
