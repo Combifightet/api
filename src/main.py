@@ -15,7 +15,8 @@ if __name__ == '__main__':
     duration: float = 15
     logger.debug(f'Started main function, sleeping for {duration} sconds')
     sleep(duration)
-    print(f'HOST = {os.getenv('HOST', 'localhost (didn\'t find it)')}')
+    logger.debug(f'HOST (os.getenv) = {os.getenv('HOST', 'localhost (didn\'t find it)')}')
+    logger.debug(f'HOST (pydantic)  = {settings.HOST}')
     logger.debug('sleeping finished, starting uvicorn server')
 
     uvicorn.run(
