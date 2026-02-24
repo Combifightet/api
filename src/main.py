@@ -1,7 +1,9 @@
 """Module responsible for running the webserver instance."""
 
 
+from time import sleep
 import uvicorn
+from loguru import logger
 
 from src.app import app
 from src.config import settings
@@ -9,8 +11,15 @@ from src.config import settings
 
 
 if __name__ == '__main__':
+    duration: float = 15
+    logger.debug(f'Started main function, sleeping for {duration} sconds')
+    sleep(duration)
+    logger.debug('sleeping finished, starting uvicorn server')
+    
     uvicorn.run(
         app,
         host=settings.HOST,
         port=settings.PORT,
     )
+
+    logger.debug('uvicorn server terminated')

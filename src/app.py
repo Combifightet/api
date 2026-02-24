@@ -4,7 +4,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from loguru import logger
 
-from src.db.connection import get_poem_by_id, init_db
+# from src.db.connection import get_poem_by_id, init_db
 
 
 
@@ -12,7 +12,7 @@ from src.db.connection import get_poem_by_id, init_db
 async def lifespan(_app: FastAPI):
     """ Lifspan manager function"""
     logger.info("Starting server . . .")
-    await init_db()
+    # await init_db()
 
     yield
     logger.info("Shutting server down . . .")
@@ -33,4 +33,5 @@ def hello_world():
 
 @app.get('/poems/{id}')
 def get_poem(id: int):
-    return get_poem_by_id(int(id))
+    return "lol das funktioniert noch nicht ._."
+    # return get_poem_by_id(int(id))
