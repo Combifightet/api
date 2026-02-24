@@ -7,8 +7,9 @@ from loguru import logger
 from sqlalchemy.exc import ProgrammingError, SQLAlchemyError
 from sqlalchemy.ext.asyncio import create_async_engine
 from sqlalchemy.ext.asyncio.engine import AsyncEngine
-from sqlmodel import SQLModel, text
+from sqlalchemy.orm import sessionmaker
 from sqlmodel.ext.asyncio.session import AsyncSession
+from sqlmodel import SQLModel, text
 
 from src.config import settings
 
@@ -28,6 +29,18 @@ async def init_db():
             await conn.run_sync(SQLModel.metadata.create_all)
     except (asyncpg.exceptions.InsufficientPrivilegeError, ProgrammingError, SQLAlchemyError) as e:
         logger.warning(e)
+
+
+
+async def get_session() -> AsyncSession:
+    async_session = sessionmaker(
+        bind=async_engine,
+        class_=AsyncSession,
+        expire_on_commit=False
+    )
+
+    async with async_session() as session:
+        yield session
 
 
 

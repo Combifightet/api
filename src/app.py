@@ -1,10 +1,17 @@
 """Module responsible for the FastAPI application and its routes."""
 
+from starlette.responses import RedirectResponse
+
+
 from contextlib import asynccontextmanager
+from http import HTTPStatus
 from fastapi import FastAPI
+from fastapi.responses import RedirectResponse
 from loguru import logger
 
-from src.db.connection import get_poem_by_id, init_db
+
+from src.db.connection import init_db
+from src.api.literary_works.routes import literary_works_router
 
 
 
@@ -26,11 +33,10 @@ app = FastAPI(
 )
 
 
-@app.get("/")
-def hello_world():
-    return {"message": "Hello, World!"}
+app.include_router(literary_works_router)
 
 
-@app.get('/literary_works/{id}')
-async def get_poem(id: int):
-    return await get_poem_by_id(int(id))
+@app.get("/", include_in_schema=False)
+def redirect_to_docs() -> RedirectResponse:
+    ''' Redirects from the home to the swagger ui documentation.append()'''
+    return RedirectResponse(url='/docs', status_code=HTTPStatus.SEE_OTHER)
