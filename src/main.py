@@ -12,14 +12,14 @@ from src.config import settings
 
 if __name__ == '__main__':
     duration: float = 15
-    logger.debug(f'Started main function, sleeping for {duration} sconds')
+    logger.debug('Started main function')
     sleep(duration)
 
     logger.info(f'DATABASE_URL (pydantic)  = {settings.DATABASE_URL}')
     logger.info(f'HOST (pydantic)  = {settings.HOST}')
     logger.info(f'PORT (pydantic)  = {settings.PORT}')
 
-    logger.debug('sleeping finished, starting uvicorn server')
+    logger.debug('Starting uvicorn server')
 
     uvicorn.run(
         app,
@@ -27,4 +27,4 @@ if __name__ == '__main__':
         port=settings.PORT,
     )
 
-    logger.debug('uvicorn server terminated')
+    logger.debug('Terminated uvicorn server')

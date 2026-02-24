@@ -38,4 +38,4 @@ async def get_poem_by_id(id: int):
             return None
         else:
             logger.info(str(poems[0]))
-            return poems[0]
+            return str(poems[0])
