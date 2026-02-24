@@ -31,6 +31,6 @@ def hello_world():
     return {"message": "Hello, World!"}
 
 
-@app.get('/poems/{id}')
+@app.get('/literary_works/{id}')
 async def get_poem(id: int):
     return await get_poem_by_id(int(id))
